@@ -1,0 +1,43 @@
+---
+- name: Ensure hostname set
+  hostname:
+    name: "{{ inventory_hostname }}"
+  when: not inventory_hostname is match('(\d{1,3}\.){3}\d{1,3}')
+  register: hostname
+  tags: hostname
+
+- name: Ensure hostname is in /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ ansible_default_ipv4.address }}.+$"
+    line: "{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+  register: hostname
+  tags: hostname
+
+- name: set timezone to Pacific
+  timezone:
+    name: America/Los_Angeles
+  register: timezone
+
+- name: apt-get update
+  apt:
+    force: yes
+    update_cache: yes
+
+- name: apt-get upgrade
+  apt:
+    upgrade: full
+
+- name: Wifi rebooter
+  copy:
+    src: wifi_rebooter.sh
+    dest: /usr/local/bin/wifi_rebooter.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Schedule Rebooter
+  cron:
+    name: "Wifi Rebooter"
+    minute: "*"
+    job: "/usr/local/bin/wifi_rebooter.sh >> /var/log/wifi_rebooter.log"

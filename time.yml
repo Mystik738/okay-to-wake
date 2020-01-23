@@ -1,0 +1,4 @@
+- hosts: clock
+  roles:
+      - common
+      - clock

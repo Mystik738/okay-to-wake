@@ -29,8 +29,8 @@ with open(dir_path + '/time.txt') as json_file:
         otwtime = datetime.strptime(intervals['time'],'%Y-%m-%d %H:%M:%S')
         elapsedTime = otwtime - now
         for interv in intervals['schedule']:
-                stime = add_time_to_today(datetime.strptime(interv[0], '%H:%M:%S'))
-                etime = add_time_to_today(datetime.strptime(interv[1], '%H:%M:%S'))
+                stime = add_time_to_today(datetime.strptime(interv[0], '%H:%M'))
+                etime = add_time_to_today(datetime.strptime(interv[1], '%H:%M'))
                 if now >= stime and now <= etime:
                         in_interval = True
                         break

@@ -1,4 +1,7 @@
 # okay-to-wait
-A simple okay to wait clock using a Raspberry Pi with a Sensehat
+A simple (very simple) okay to wait clock using a Raspberry Pi with a Sensehat.
 
 Requires a webserver with PHP and a cron job to run Python.
+
+Schedules are set to run continuously, but have no validation apart from being json. The clock will be red between the intervals, which should follow this format:
+[["HH:MM", "HH:MM"], ["HH:MM", "HH:MM"]]
