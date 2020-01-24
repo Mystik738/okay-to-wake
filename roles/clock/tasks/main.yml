@@ -1,27 +1,56 @@
 ---
 - name: Install packages
-  action: >
-    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
-  with_items:
+  apt: 
+    name:
     - php
     - apache2
     - python
+    - python-pip
+    - sense-hat
+    - vim
+    state: present
+    update_cache: yes
+
+#Would be nice to reboot only if the I2C is updated, but this doesn't do that
+#- name: Set raspiconfig variable
+#  set_fact: 
+#    raspiconfig: "{{ RASPICONFIG }}"
+
+# https://github.com/mohankumargupta/raspberrypi-ansible/blob/master/raspbian-setup.yml
+- name: Enable I2C
+  shell: "raspi-config nonint do_i2c 0"
+#  when: raspiconfig.I2C
+
+- name: Reboot
+  reboot:
+#  when:  raspiconfig.I2C
 
 - name: Copy index.php
   copy: 
     src: index.php
     dest: /var/www/html/index.php
-    owner: pi
-    group: pi
+    owner: www-data
+    group: www-data
     mode: 0644
 
 - name: Copy display.py
   copy: 
     src: display.py
     dest: /var/www/html/display.py
-    owner: pi
-    group: pi
+    owner: www-data
+    group: www-data
     mode: 0644
+
+- name: Remove index.html
+  file:
+    state: absent
+    path: /var/www/html/index.html
+
+- name: Change permissions
+  file:
+    path: /var/www/html
+    owner: www-data
+    group: www-data
 
 - name: Schedule display.py
   cron:
