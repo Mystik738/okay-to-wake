@@ -1,4 +1,4 @@
-# okay-to-wait
+# okay-to-wake
 A simple (very simple) okay to wait clock using a Raspberry Pi with a Sensehat.
 
 Requires a Raspberry Pi with networking and a Sensehat.
