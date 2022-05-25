@@ -38,29 +38,34 @@ with open(dir_path + '/time.txt') as json_file:
 sense = SenseHat()
 
 #set the default color to green
-c = [0,255,0]
+c = [0,96,0]
 #If we're before alarm time, turn red
 if intervals['use_schedule']:
     #If we're in an interval, turn red
     if in_interval:
-        c = [255,0,0]
+        c = [96,0,0]
 else:
     if now <= otwtime:
-        c = [255,0,0]
+        c = [96,0,0]
   
-#Clear the last image
-sense.clear()
-
-#Set the new image to our screen
-img = [
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c,
-  c,c,c,c,c,c,c,c
-  ]
-
-sense.set_pixels(img);
+#Compare with our current pixels
+pixel_list = sense.get_pixels()
+p = pixel_list[0]
+if p[0] != c[0] or p[1] != c[1] or p[2] != c[2]:
+    
+    #Clear the last image
+    sense.clear()
+    
+    #Set the new image to our screen
+    img = [
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c,
+      c,c,c,c,c,c,c,c
+      ]
+    
+    sense.set_pixels(img)
