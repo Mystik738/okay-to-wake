@@ -2,4 +2,3 @@
   roles:
       - common
       - clock
-      - weather
