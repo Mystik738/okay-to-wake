@@ -12,9 +12,9 @@ then
    	date >> /var/log/wifi_reboot.log
 	echo "Rebooting wifi" >> /var/log/wifi_reboot.log
 	# Restart the wireless interface
-	ifdown --force wlan0
+	ifconfig wlan0 down
 	sleep 5
-	ifup --force wlan0
+	ifconfig wlan0 up
 	if [ $? != 0 ]
 	then
 		echo "Error Rebooting" >> /var/log/wifi_reboot.log
