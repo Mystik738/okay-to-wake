@@ -1,3 +1,4 @@
 .cache/time-to-pi
 .log/ansible.log
 roles/weather/files/vars.json
+.DS_Store

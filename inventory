@@ -1,2 +1,2 @@
 [clock]
-time-to-pi  ansible_host=192.168.1.139
+time-to-pi  ansible_host=192.168.10.142
